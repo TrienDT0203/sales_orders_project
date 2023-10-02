@@ -4,12 +4,6 @@ updatedAt: 2023/10/02
 }
 */
 
-/*
-lastEditedBy: TrienDT
-updatedAt: 2023/10/02
-}
-*/
-
 WITH source_data_supplier AS (
     SELECT *
     FROM `vit-lam-data.wide_world_importers.purchasing__supplier_categories`
