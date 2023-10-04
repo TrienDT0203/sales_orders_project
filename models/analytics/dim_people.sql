@@ -1,12 +1,6 @@
-/*
-lastEditedBy: TrienDT
-updatedAt: 2023/10/02
-}
-*/
-
 WITH source_data_people AS (
     SELECT *
-    FROM `vit-lam-data`.wide_world_importers.application__people
+    FROM `vit-lam-data.wide_world_importers.application__people`
 ),
     source_data_people__renamed_columns AS (
         SELECT
@@ -20,7 +14,7 @@ WITH source_data_people AS (
     ),
     source_data_people__cast_type AS (
         SELECT
-            CAST( person_key as int )  person_key
+            CAST( person_key as int ) person_key
             , CAST( person_name as string ) person_name
             , CAST( preferred_name as string ) preferred_name
             , CAST( search_name as string ) search_name
@@ -68,6 +62,7 @@ WITH source_data_people AS (
             , "Error/ Invalid" as is_employee
             , "Error/ Invalid" as is_sales_person
     )
+    
 SELECT
     person_key
     , person_name
