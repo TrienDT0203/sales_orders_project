@@ -21,24 +21,9 @@ WITH source_colors AS (
             , CAST( color_name AS STRING ) AS color_name
         FROM source_colors__renamed_columns
 
-    ),
-    source_colors__union AS (
-        SELECT *
-        FROM source_colors__cast_type
-
-        UNION  All
-        SELECT
-            0 AS color_key
-            , "Undefined" AS color_name
-
-        UNION  All
-        SELECT
-            -1 AS color_key
-            , "Error/ Invalid" AS color_name
-
     )
 
 SELECT
     color_key
     , color_name
-from source_colors__union
+from source_colors__cast_type

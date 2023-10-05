@@ -21,27 +21,6 @@ WITH source_countries AS (
             , CAST( region AS string ) region
         FROM source_countries__renamed_columns
 
-    ),
-    source_countries__union AS (
-        SELECT *
-        FROM source_countries__cast_type
-
-        UNION  All
-        SELECT
-            0 AS country_key
-            , "Undefined" AS country_name
-            , "Undefined" AS formal_name
-            , "Undefined" AS continent
-            , "Undefined" AS region
-
-        UNION  All
-        SELECT
-            -1 AS country_key
-            , "Error/ Invalid" AS country_name
-            , "Error/ Invalid" AS formal_name
-            , "Error/ Invalid" AS continent
-            , "Error/ Invalid" AS region
-
     )
 
 SELECT
@@ -50,4 +29,4 @@ SELECT
     ,  formal_name
     ,  continent
     ,  region
-from source_countries__union
+from source_countries__cast_type
