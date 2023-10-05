@@ -24,6 +24,8 @@ SELECT
     , dim_city.city_name
     , dim_city.state_province_key
     , COALESCE(dim_state_province.state_province_name, "Invalid") AS state_province_name
+    , COALESCE(dim_state_province.country_key) AS country_key
+    , COALESCE(dim_state_province.country_name, "Invalid") AS country_name
 from source_city__cast_type dim_city
 LEFT JOIN {{ ref('stg_dim_state_province')}} AS dim_state_province
     ON dim_city.state_province_key = dim_state_province.state_province_key
