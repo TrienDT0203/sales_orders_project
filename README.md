@@ -1,4 +1,4 @@
-Welcome to my dbt project!
+Welcome to my Sales order project!
 
 
 ## 🎯 Knowledge & techniques that I achieved
@@ -11,8 +11,6 @@ Welcome to my dbt project!
 You can find the diagrams at [`diagrams`](diagrams).
 
 You can find data models at [`models/analytics`](models/analytics).
-
-You can find data quality tests inside the `yml` files at [`models/analytics`](models/analytics).
 
 ## Modules that I implemented
 
