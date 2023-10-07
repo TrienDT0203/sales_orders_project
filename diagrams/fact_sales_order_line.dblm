@@ -1,0 +1,115 @@
+Table fact_sales_order_lines {
+  order_line_key int [pk]
+  order_key int
+  product_key int
+  customer_key int
+  salesperson_person_key int
+  picked_by_person_key int
+  contact_person_key int
+  expected_delivery_date datetime
+  description string
+  package_type_key int
+  order_date date
+  picked_quantity int
+  quantity int
+  unit_price float
+  tax_rate float
+  cost float
+}
+
+Table dim_date {
+  date_key date [primary key]
+  year int
+  month int
+  month_name string 
+  date int 
+  date_of_week string
+  date_of_week_short string 
+  is_weekdate_or_weekend string 
+}
+
+Table dim_customer {
+  customer_key int [primary key]
+  customer_name string
+  bill_to_customer_key int
+  bill_to_customer_name string
+  is_statement_sent string
+  is_on_credit_hold string
+  credit_limit float
+  standard_discount_percentage float
+  payment_days int
+  account_opened_date date
+  phone_number string
+  delivery_address_line_1 string
+  delivery_address_line_2 string
+  delivery_location string
+  customer_category_key int
+  customer_category_name string
+  buying_group_key int
+  buying_group_name string
+  delivery_method_key int
+  delivery_method_name string
+  delivery_city_key int
+  delivery_city_name string
+  state_province_key int
+  state_province_name string
+  country_id int
+  country_name string
+  // location string
+  primary_contact_person_key int
+  primary_contact_person_name string
+  primary_preferred_name string
+  primary_search_name string
+  primary_is_employee string
+  primary_is_sales_person string
+}
+
+Table dim_product {
+  product_key int [primary key]
+  product_name string
+  supplier_key int
+  supplier_name string
+  supplier_category_key int
+  supplier_category_name string
+  color_key int
+  color_name string
+  unit_package_key int
+  unit_package_name string
+  outer_package_key int
+  outer_package_name string
+  brand string
+  size string
+  lead_time_days int
+  is_chiller_stocks string
+  bar_code string
+  tax_rate float
+  unit_price float
+  recommended_retail_price float
+  typical_weight_per_unit float
+  search_details string
+  }
+
+Table dim_people {
+  person_key int [primary key]
+  person_name string
+  preferred_name string
+  search_name string
+  is_employee string
+  is_sales_person string
+}
+
+
+Table dim_package_type {
+  package_type_key int 
+  package_type_description string
+}
+
+Ref: fact_sales_order_lines.order_date > dim_date.date_key 
+Ref: fact_sales_order_lines.customer_key > dim_customer.customer_key 
+Ref: fact_sales_order_lines.salesperson_person_key > dim_people.person_key
+Ref: fact_sales_order_lines.picked_by_person_key > dim_people.person_key
+Ref: fact_sales_order_lines.contact_person_key > dim_people.person_key
+Ref: fact_sales_order_lines.product_key > dim_product.product_key 
+Ref: fact_sales_order_lines.package_type_key > dim_package_type.package_type_key 
+
+
