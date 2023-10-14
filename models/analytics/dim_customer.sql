@@ -80,11 +80,11 @@ SELECT
     , dim_customer.delivery_method_key
     , COALESCE(dim_delivery_method.delivery_method_name, "Invalid") AS delivery_method_name
     , dim_customer.delivery_city_key
-    , COALESCE(dim_city.city_name,"Invalid")  delivery_city_city_name
-    , COALESCE(dim_city.state_province_key,0)  delivery_city_state_province_key
-    , COALESCE(dim_city.state_province_name,"Invalid")  delivery_city_state_province_name
+    , COALESCE(dim_city.city_name,"Invalid")  delivery_city_name
+    , COALESCE(dim_city.state_province_key,0)  delivery_state_province_key
+    , COALESCE(dim_city.state_province_name,"Invalid")  delivery_state_province_name
     , COALESCE(dim_city.country_key,0)  country_key
-    , COALESCE(dim_city.country_name,"Invalid")  country_name
+    , COALESCE(dim_city.country_name,"Invalid")  delivery_country_name
     , dim_customer.primary_contact_person_key
     , COALESCE(dim_people.person_name,"Invalid")  primary_contact_person_name
     , COALESCE(dim_people.preferred_name,"Invalid")  preferred_name
