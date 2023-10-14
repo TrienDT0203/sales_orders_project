@@ -94,13 +94,13 @@ SELECT
 FROM source_customer__cast_type dim_customer
 LEFT JOIN source_sub_dim_customer sub_dim_customer
     ON dim_customer.bill_to_customer_key = sub_dim_customer.customer_key
-LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_customer_category` dim_customer_category
+LEFT JOIN {{ ref('stg_dim_customer_category') }} dim_customer_category
     ON dim_customer.customer_category_key = dim_customer_category.customer_category_key
-LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_buying_group` dim_buying_group
+LEFT JOIN {{ ref('stg_dim_buying_group') }} dim_buying_group
     ON dim_customer.buying_group_key = dim_buying_group.buying_group_key
-LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_delivery_method` dim_delivery_method
+LEFT JOIN {{ ref('stg_dim_delivery_method') }} dim_delivery_method
     ON dim_customer.delivery_method_key = dim_delivery_method.delivery_method_key
-LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_city` dim_delivery_city
+LEFT JOIN {{ ref('stg_dim_city') }} dim_city
     ON dim_customer.delivery_city_key = dim_city.city_key
-LEFT JOIN `data-warehouse-400809`.`sales_order`.`dim_people` dim_people
+LEFT JOIN {{ ref('dim_people') }} dim_people
     ON dim_customer.primary_contact_person_key = dim_people.person_key
