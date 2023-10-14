@@ -28,8 +28,8 @@ WITH source_customer AS (
               CAST(customer_key AS INT) customer_key
             , CAST(customer_name AS STRING) customer_name
             , CAST(bill_to_customer_key AS INT) bill_to_customer_key
-            , CAST(is_statement_sent AS STRING) is_statement_sent
-            , CAST(is_on_credit_hold AS STRING) is_on_credit_hold
+            , CAST(is_statement_sent AS BOOLEAN) is_statement_sent
+            , CAST(is_on_credit_hold AS BOOLEAN) is_on_credit_hold
             , CAST(credit_limit AS FLOAT64) credit_limit
             , CAST(standard_discount_percentage AS FLOAT64) standard_discount_percentage 
             , CAST(payment_days AS INT) payment_days
@@ -57,13 +57,13 @@ SELECT
     , dim_customer.bill_to_customer_key
     , COALESCE(sub_dim_customer.customer_name, "Invalid") AS bill_to_customer_name
     , CASE 
-        WHEN dim_customer.is_statement_sent = 'true' then 'Sent'
-        WHEN  dim_customer.is_statement_sent = 'false' then 'Not Sent'
+        WHEN dim_customer.is_statement_sent = true then 'Sent'
+        WHEN  dim_customer.is_statement_sent = false then 'Not Sent'
         ELSE "Invalid"
         END AS is_statement_sent
     , CASE 
-        WHEN dim_customer.is_on_credit_hold = 'true' then 'On credit hold'
-        WHEN  dim_customer.is_on_credit_hold = 'false' then 'Not on credit hold'
+        WHEN dim_customer.is_on_credit_hold = true then 'On credit hold'
+        WHEN  dim_customer.is_on_credit_hold = false then 'Not on credit hold'
         ELSE "Invalid"
         END AS is_on_credit_hold
     , dim_customer.credit_limit
