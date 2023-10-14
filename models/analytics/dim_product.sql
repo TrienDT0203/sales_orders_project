@@ -41,15 +41,8 @@ WITH source_product AS (
             , CAST(typical_weight_per_unit AS FLOAT64 ) typical_weight_per_unit			
             , CAST(search_details as STRING ) search_details
         FROM source_product__rename_columns	
-    ),
-    source_product__join_outer_package_name AS (
-        SELECT 
-            dim_product.*
-            , dim_package_type.package_type_name AS outer_package_name
-        FROM source_product__cast_type as dim_product
-        LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_package_type` AS dim_package_type
-            ON dim_product.outer_package_key = dim_package_type.package_type_key
     )
+
 SELECT
     dim_product.product_key
     , dim_product.product_name
@@ -62,7 +55,7 @@ SELECT
     , dim_product.unit_package_key
     , COALESCE(dim_package_type.package_type_name, "Invalid")  unit_package_name
     , dim_product.outer_package_key
-    , dim_product.outer_package_name
+    , dim_outer_package_name.package_type_name as outer_package_name
     , dim_product.brand
     , dim_product.size
     , dim_product.lead_time_days
@@ -73,10 +66,12 @@ SELECT
     , dim_product.recommended_retail_price
     , dim_product.typical_weight_per_unit
     , dim_product.search_details
-FROM source_product__join_outer_package_name as dim_product
-LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_color` as dim_color
+FROM source_product__cast_type as dim_product
+LEFT JOIN {{ref('stg_dim_color')}} as dim_color
     ON dim_product.color_key = dim_color.color_key
-LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_supplier` as dim_supplier
+LEFT JOIN {{ref('stg_dim_supplier')}} as dim_supplier
     ON dim_product.supplier_key = dim_supplier.supplier_key
-LEFT JOIN `data-warehouse-400809`.`sales_order_staging`.`stg_dim_package_type` AS dim_package_type
+LEFT JOIN {{ref('dim_package_type')}} AS dim_package_type
     ON dim_product.unit_package_key = dim_package_type.package_type_key
+LEFT JOIN {{ref('dim_package_type')}} AS dim_outer_package_name
+    ON dim_product.outer_package_key = dim_outer_package_name.package_type_key
